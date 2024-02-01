@@ -23,7 +23,7 @@ const SingleProduct = () => {
   };
 
   const cartProduct = {
-    cartId: product.id + productColor,
+    cartID: product.id + productColor,
     productID: product.id,
     image,
     title,
@@ -32,10 +32,11 @@ const SingleProduct = () => {
     price,
     amount,
   };
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
 
   const addToCart = () => {
-    dispath(addItem({ product: cartProduct }));
+    console.log("adding to cart", cartProduct);
+    dispatch(addItem({ product: cartProduct }));
   };
   return (
     <section>
@@ -101,7 +102,7 @@ const SingleProduct = () => {
               value={amount}
               onChange={handleAmount}
             >
-              {generateAmountOptions(10)}
+              {generateAmountOptions(20)}
             </select>
           </div>
           {/* cart btn */}
