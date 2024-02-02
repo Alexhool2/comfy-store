@@ -1,17 +1,20 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { clearCart } from "../../featured/cart/cartSlice";
-import { logoutUser } from "../../featured/user/userSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { clearCart } from '../features/cart/cartSlice';
+import { logoutUser } from '../features/user/userSlice';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const user = useSelector((state) => state.userState.user);
 
   const handleLogout = () => {
-    navigate("/");
+    navigate('/');
     dispatch(clearCart());
     dispatch(logoutUser());
+    queryClient.removeQueries();
   };
 
   return (
@@ -24,7 +27,7 @@ const Header = () => {
               className='btn btn-xs btn-outline btn-primary'
               onClick={handleLogout}
             >
-              Logout
+              logout
             </button>
           </div>
         ) : (

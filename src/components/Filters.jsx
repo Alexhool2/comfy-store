@@ -1,23 +1,23 @@
-import { Form, useLoaderData, Link } from "react-router-dom";
-import FormInput from "./FormInput";
-import FormSelect from "./FormSelect";
-import FormRange from "./FormRange";
-import FormCheckbox from "./FormCheckbox";
-
+import { Form, useLoaderData, Link } from 'react-router-dom';
+import FormInput from './FormInput';
+import FormSelect from './FormSelect';
+import FormRange from './FormRange';
+import FormCheckbox from './FormCheckbox';
 const Filters = () => {
   const { meta, params } = useLoaderData();
   const { search, company, category, shipping, order, price } = params;
+
   return (
-    <Form className='bg-base-200 rounded-md px-8 py-4 grid gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center'>
-      {/* Search */}
+    <Form className='bg-base-200 rounded-md px-8 py-4 grid gap-x-4  gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center'>
+      {/* SEARCH */}
       <FormInput
         type='search'
         label='search product'
         name='search'
         size='input-sm'
         defaultValue={search}
-      ></FormInput>
-      {/* Categories */}
+      />
+      {/* CATEGORIES */}
       <FormSelect
         label='select category'
         name='category'
@@ -25,7 +25,7 @@ const Filters = () => {
         size='select-sm'
         defaultValue={category}
       />
-      {/* Companies */}
+      {/* COMPANIES */}
       <FormSelect
         label='select company'
         name='company'
@@ -33,11 +33,11 @@ const Filters = () => {
         size='select-sm'
         defaultValue={company}
       />
-      {/* Order */}
+      {/* ORDER */}
       <FormSelect
         label='sort by'
         name='order'
-        list={["a-z", "z-a", "high", "low"]}
+        list={['a-z', 'z-a', 'high', 'low']}
         size='select-sm'
         defaultValue={order}
       />
@@ -51,16 +51,16 @@ const Filters = () => {
       {/* SHIPPING */}
       <FormCheckbox
         name='shipping'
-        label='free shipping '
-        size=' checkbox-sm'
+        label='free shipping'
+        size='checkbox-sm'
         defaultValue={shipping}
       />
-      {/* Buttons */}
+      {/* BUTTONS */}
       <button type='submit' className='btn btn-primary btn-sm'>
-        Search
+        search
       </button>
       <Link to='/products' className='btn btn-accent btn-sm'>
-        Reset
+        reset
       </Link>
     </Form>
   );

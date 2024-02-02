@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-import hero1 from "../project-assets/hero1.webp";
-import hero2 from "../project-assets/hero2.webp";
-import hero3 from "../project-assets/hero3.webp";
-import hero4 from "../project-assets/hero4.webp";
+import hero1 from '../assets/hero1.webp';
+import hero2 from '../assets/hero2.webp';
+import hero3 from '../assets/hero3.webp';
+import hero4 from '../assets/hero4.webp';
 
 const carouselImages = [hero1, hero2, hero3, hero4];
 
@@ -15,8 +15,9 @@ const Hero = () => {
           We are changing the way people shop
         </h1>
         <p className='mt-8 max-w-xl text-lg leading-8'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum dolor
-          ex expedita vel magnam nisi tempore mollitia laborum sunt nulla!
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore
+          repellat explicabo enim soluta temporibus asperiores aut obcaecati
+          perferendis porro nobis.
         </p>
         <div className='mt-10'>
           <Link to='/products' className='btn btn-primary'>
@@ -24,7 +25,7 @@ const Hero = () => {
           </Link>
         </div>
       </div>
-      <div className='hidden h-[28rem] lg:carousel carousel-center p-4 space-x-4 bg-neutral rounded-box'>
+      <div className='hidden h-[28rem] lg:carousel carousel-center p-4 space-x-4 bg-neutral rounded-box '>
         {carouselImages.map((image) => {
           return (
             <div key={image} className='carousel-item'>

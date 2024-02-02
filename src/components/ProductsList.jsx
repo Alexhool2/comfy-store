@@ -1,5 +1,5 @@
-import { Link, useLoaderData } from "react-router-dom";
-import { formatPrice } from "../../utils";
+import { Link, useLoaderData } from 'react-router-dom';
+import { formatPrice } from '../utils';
 
 const ProductsList = () => {
   const { products } = useLoaderData();
@@ -13,7 +13,7 @@ const ProductsList = () => {
           <Link
             key={product.id}
             to={`/products/${product.id}`}
-            className='p-8 rounded-lg flex flex-col sm:flex-row gap-y-4 flex-wrap bg-base-100 shadow-xl hover:shadow-2xl duration-300 group'
+            className='p-8 rounded-lg flex flex-col sm:flex-row gap-y-4 flex-wrap  bg-base-100 shadow-xl hover:shadow-2xl duration-300 group'
           >
             <img
               src={image}

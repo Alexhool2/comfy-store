@@ -1,12 +1,12 @@
-import { Form, redirect } from "react-router-dom";
-import FormInput from "./FormInput";
-import SubmitBtn from "./SubmitBtn";
-import { customFetch, formatPrice } from "../../utils";
-import { toast } from "react-toastify";
-import { clearCart } from "../../featured/cart/cartSlice";
+import { Form, redirect } from 'react-router-dom';
+import FormInput from './FormInput';
+import SubmitBtn from './SubmitBtn';
+import { customFetch, formatPrice } from '../utils';
+import { toast } from 'react-toastify';
+import { clearCart } from '../features/cart/cartSlice';
 
 export const action =
-  (store) =>
+  (store, queryClient) =>
   async ({ request }) => {
     const formData = await request.formData();
     const { name, address } = Object.fromEntries(formData);
@@ -25,7 +25,7 @@ export const action =
 
     try {
       const response = await customFetch.post(
-        "/orders",
+        '/orders',
         { data: info },
         {
           headers: {
@@ -33,15 +33,18 @@ export const action =
           },
         }
       );
+      queryClient.removeQueries(['orders']);
       store.dispatch(clearCart());
-      toast.success("order placed successfully");
-      return redirect("/orders");
+      toast.success('order placed successfully');
+      return redirect('/orders');
     } catch (error) {
       console.log(error);
       const errorMessage =
         error?.response?.data?.error?.message ||
-        "there was an error placing your order. please try again";
+        'there was an error placing your order';
       toast.error(errorMessage);
+      if (error?.response?.status === 401 || 403) return redirect('/login');
+      return null;
     }
   };
 

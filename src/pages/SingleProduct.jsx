@@ -1,14 +1,26 @@
-import { useLoaderData } from "react-router-dom";
-import { formatPrice, customFetch, generateAmountOptions } from "../utils";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addItem } from "../featured/cart/cartSlice";
+import { useLoaderData } from 'react-router-dom';
+import { formatPrice, customFetch, generateAmountOptions } from '../utils';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../features/cart/cartSlice';
 
-export const loader = async ({ params }) => {
-  const response = await customFetch(`/products/${params.id}`);
-  return { product: response.data.data };
+const singleProductQuery = (id) => {
+  return {
+    queryKey: ['singleProduct', id],
+    queryFn: () => customFetch(`/products/${id}`),
+  };
 };
+
+export const loader =
+  (queryClient) =>
+  async ({ params }) => {
+    const response = await queryClient.ensureQueryData(
+      singleProductQuery(params.id)
+    );
+
+    return { product: response.data.data };
+  };
 
 const SingleProduct = () => {
   const { product } = useLoaderData();
@@ -27,17 +39,18 @@ const SingleProduct = () => {
     productID: product.id,
     image,
     title,
+    price,
     company,
     productColor,
-    price,
     amount,
   };
+
   const dispatch = useDispatch();
 
   const addToCart = () => {
-    console.log("adding to cart", cartProduct);
     dispatch(addItem({ product: cartProduct }));
   };
+
   return (
     <section>
       <div className='text-md breadcrumbs'>
@@ -50,17 +63,15 @@ const SingleProduct = () => {
           </li>
         </ul>
       </div>
-
-      {/* product */}
-
+      {/* PRODUCT */}
       <div className='mt-6 grid gap-y-8 lg:grid-cols-2 lg:gap-x-16'>
-        {/* image */}
+        {/* IMAGE */}
         <img
           src={image}
           alt={title}
           className='w-96 h-96 object-cover rounded-lg lg:w-full'
         />
-        {/* product */}
+        {/* PRODUCT */}
         <div>
           <h1 className='capitalize text-3xl font-bold'>{title}</h1>
           <h4 className='text-xl text-neutral-content font-bold mt-2'>
@@ -80,7 +91,7 @@ const SingleProduct = () => {
                     key={color}
                     type='button'
                     className={`badge w-6 h-6 mr-2 ${
-                      color === productColor && "border-2 border-secondary"
+                      color === productColor && 'border-2 border-secondary'
                     }`}
                     style={{ backgroundColor: color }}
                     onClick={() => setProductColor(color)}
@@ -89,10 +100,10 @@ const SingleProduct = () => {
               })}
             </div>
           </div>
-          {/* amount */}
+          {/* AMOUNT */}
           <div className='form-control w-full max-w-xs'>
-            <label htmlFor='amount' className='label'>
-              <h4 className='text-md font-medium tracking-wider capitalize'>
+            <label className='label' htmlFor='amount'>
+              <h4 className='text-md font-medium -tracking-wider capitalize'>
                 amount
               </h4>
             </label>
@@ -105,7 +116,7 @@ const SingleProduct = () => {
               {generateAmountOptions(20)}
             </select>
           </div>
-          {/* cart btn */}
+          {/* CART BTN */}
           <div className='mt-10'>
             <button className='btn btn-secondary btn-md' onClick={addToCart}>
               Add to bag
@@ -116,5 +127,4 @@ const SingleProduct = () => {
     </section>
   );
 };
-
 export default SingleProduct;
